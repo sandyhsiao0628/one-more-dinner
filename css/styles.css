@@ -315,9 +315,11 @@ body {
   font-family: var(--font-script);
   font-size: 28px;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.35;
   color: var(--red);
   width: 100%;
+  padding: 6px 0 2px;
+  box-sizing: border-box;
 }
 
 .app-shell.is-app-hidden .headline {
@@ -336,7 +338,7 @@ body {
   }
 
   to {
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(-6px 0 -4px 0);
     opacity: 1;
   }
 }
@@ -936,7 +938,7 @@ body.is-intro-active {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 10px;
+  padding: 16px 10px 12px;
   box-shadow: 0 4px 16px rgba(173, 2, 0, 0.08);
   opacity: 0;
   transform: translateY(0) scale(0.96);
@@ -948,7 +950,9 @@ body.is-intro-active {
   font-size: clamp(18px, 5.2vw, 23px);
   color: var(--red);
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.35;
+  padding-top: 4px;
+  display: block;
   opacity: 0;
   animation: letter-text-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 2.85s forwards;
 }
