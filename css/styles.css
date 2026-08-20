@@ -117,7 +117,7 @@ body {
 .invitation-card {
   position: relative;
   width: var(--frame-width);
-  height: 660px;
+  height: 668px;
   padding-top: 28px;
 }
 
@@ -126,7 +126,7 @@ body {
   top: 54px;
   left: 22px;
   width: 349px;
-  height: 577px;
+  height: 585px;
   pointer-events: none;
   z-index: 0;
 }
@@ -243,7 +243,7 @@ body {
 
 .invitation-content {
   position: absolute;
-  top: 231.5px;
+  top: 220px;
   left: 53px;
   width: 288px;
   display: flex;
@@ -270,6 +270,16 @@ body {
   letter-spacing: 0.98px;
   color: var(--red);
   width: 100%;
+}
+
+.signature {
+  font-family: var(--font-script);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--red);
+  width: 100%;
+  margin-top: -8px;
 }
 
 .event-details {
@@ -315,7 +325,7 @@ body {
 
 #invitation-view .btn--primary {
   position: absolute;
-  top: 660px;
+  top: 668px;
   left: 30px;
   width: 341px;
 }
