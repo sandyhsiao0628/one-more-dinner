@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=13">
+  <link rel="stylesheet" href="css/styles.css?v=17">
 </head>
 <body>
   <div id="envelope-intro" class="envelope-intro" aria-live="polite">
@@ -126,16 +126,22 @@
 
       <button type="submit" form="rsvp-form" class="btn btn--primary" id="rsvp-submit">Submit</button>
 
-      <div id="success-message" class="success-message" hidden>
-        <p class="success-title">Thanks for RSVPing!</p>
-        <p class="success-body">See you soon 🍷</p>
-        <button type="button" class="btn btn--secondary" id="back-btn">Back to invitation</button>
+      <div id="success-message" class="success-message" hidden aria-live="polite">
+        <p class="success-kicker">RSVP received</p>
+        <h2 class="success-title" id="success-title">Got it!</h2>
+        <p class="success-body" id="success-body"></p>
+        <div class="success-card" id="success-card" hidden>
+          <p class="success-card-label">See you there</p>
+          <p class="success-card-date">AUG 21, 2026 · 7:00 PM</p>
+          <p class="success-card-address">41-46 27TH ST, LIC</p>
+        </div>
+        <p class="success-signature">- Sandy</p>
       </div>
     </section>
   </main>
     </div>
   </div>
 
-  <script src="js/app.js?v=6"></script>
+  <script src="js/app.js?v=10"></script>
 </body>
 </html>

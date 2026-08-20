@@ -392,6 +392,13 @@ body {
   pointer-events: none;
 }
 
+#rsvp-view.is-success .deco,
+#rsvp-view.is-success .deco.deco--burst,
+#rsvp-view.is-success .deco.deco--star-tr,
+#rsvp-view.is-success .deco.deco--scribble {
+  display: none !important;
+}
+
 /* Top-left firework burst — Figma 859:46949 */
 .deco--burst {
   left: 32px;
@@ -633,31 +640,83 @@ body {
 
 .success-message {
   position: absolute;
-  top: 90px;
+  top: 120px;
   left: 43px;
   width: 307px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
   text-align: center;
   z-index: 1;
+}
+
+.success-kicker {
+  font-size: 9px;
+  letter-spacing: 0.63px;
+  color: var(--gray);
+  text-transform: uppercase;
 }
 
 .success-title {
   font-family: var(--font-script);
   font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
   color: var(--red);
+  width: 100%;
 }
 
 .success-body {
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
   letter-spacing: 0.98px;
-  color: var(--form-label);
+  color: var(--red);
+  width: 100%;
 }
 
-.success-message .btn--secondary {
-  margin-top: 8px;
+.success-card {
+  background: var(--event-box-bg);
+  border: 1px solid var(--event-box-border);
+  border-radius: 12px;
+  padding: 13px 24px;
+  width: 221px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+}
+
+.success-card-label {
+  font-size: 9px;
+  letter-spacing: 0.63px;
+  color: var(--gray);
+}
+
+.success-card-date {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  color: var(--label-gray);
+}
+
+.success-card-address {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.84px;
+  color: var(--label-gray);
+}
+
+.success-signature {
+  font-family: var(--font-script);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--red);
+  margin-top: -4px;
 }
 
 /* ── Envelope intro ── */

@@ -5,7 +5,9 @@ const rsvpContent = document.getElementById('rsvp-content');
 const rsvpSubmit = document.getElementById('rsvp-submit');
 const rsvpForm = document.getElementById('rsvp-form');
 const successMessage = document.getElementById('success-message');
-const backBtn = document.getElementById('back-btn');
+const successTitle = document.getElementById('success-title');
+const successBody = document.getElementById('success-body');
+const successCard = document.getElementById('success-card');
 const envelopeIntro = document.getElementById('envelope-intro');
 const appShell = document.querySelector('.app-shell');
 
@@ -41,6 +43,12 @@ function playEnvelopeIntro() {
 
 playEnvelopeIntro();
 
+function setRsvpDecosVisible(visible) {
+  rsvpView.querySelectorAll('.deco').forEach((el) => {
+    el.hidden = !visible;
+  });
+}
+
 function restartDecoAnimations() {
   rsvpView.querySelectorAll('.deco').forEach((el) => {
     el.style.animation = 'none';
@@ -57,10 +65,13 @@ function showView(view) {
   rsvpView.hidden = view !== 'rsvp';
 
   if (view === 'rsvp') {
+    rsvpView.classList.remove('is-success');
+    setRsvpDecosVisible(true);
     rsvpContent.hidden = false;
     rsvpSubmit.hidden = false;
     rsvpForm.hidden = false;
     successMessage.hidden = true;
+    successCard.hidden = true;
     rsvpForm.reset();
     requestAnimationFrame(restartDecoAnimations);
   }
@@ -69,8 +80,6 @@ function showView(view) {
 }
 
 rsvpBtn.addEventListener('click', () => showView('rsvp'));
-
-backBtn.addEventListener('click', () => showView('invitation'));
 
 rsvpForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -93,8 +102,23 @@ rsvpForm.addEventListener('submit', (event) => {
     return;
   }
 
+  const isAttending = rsvpForm.attending.value === 'yes';
+  const firstName = trimmedName.split(/\s+/)[0];
+
+  if (isAttending) {
+    successTitle.textContent = "Can't wait!";
+    successBody.textContent = `Thanks, ${firstName}! Your spot is saved — I'll save you a seat (and a drink) 🍷`;
+    successCard.hidden = false;
+  } else {
+    successTitle.textContent = 'Thanks for letting me know';
+    successBody.textContent = `Appreciate the note, ${firstName}. We'll miss you at dinner, but hope our paths cross again soon 💌`;
+    successCard.hidden = true;
+  }
+
   rsvpContent.hidden = true;
   rsvpSubmit.hidden = true;
   rsvpForm.hidden = true;
   successMessage.hidden = false;
+  rsvpView.classList.add('is-success');
+  setRsvpDecosVisible(false);
 });
