@@ -729,6 +729,20 @@ body {
   line-height: 1.2;
 }
 
+.rsvp-error {
+  width: 307px;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.42px;
+  color: var(--red);
+  text-align: center;
+}
+
+#rsvp-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 /* ── Success State ── */
 
 .success-message {

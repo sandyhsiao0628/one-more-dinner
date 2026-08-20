@@ -101,6 +101,76 @@ function setRsvpDecosVisible(visible) {
   });
 }
 
+const rsvpError = document.getElementById('rsvp-error');
+const RSVP_SCRIPT_URL = window.RSVP_CONFIG?.scriptUrl?.trim() || '';
+
+function setRsvpSubmitting(isSubmitting) {
+  rsvpSubmit.disabled = isSubmitting;
+  rsvpSubmit.textContent = isSubmitting ? 'Submitting...' : 'Submit';
+}
+
+function setRsvpError(message) {
+  if (!rsvpError) {
+    return;
+  }
+
+  if (message) {
+    rsvpError.textContent = message;
+    rsvpError.hidden = false;
+    return;
+  }
+
+  rsvpError.textContent = '';
+  rsvpError.hidden = true;
+}
+
+async function submitRsvp({ name, attending }) {
+  if (!RSVP_SCRIPT_URL) {
+    throw new Error('RSVP is not connected yet. Please try again in a moment.');
+  }
+
+  const response = await fetch(RSVP_SCRIPT_URL, {
+    method: 'POST',
+    redirect: 'follow',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8',
+    },
+    body: JSON.stringify({ name, attending }),
+  });
+
+  let result = null;
+
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error('Could not save your RSVP. Please try again.');
+  }
+
+  if (!response.ok || !result?.ok) {
+    throw new Error(result?.error || 'Could not save your RSVP. Please try again.');
+  }
+}
+
+function showRsvpSuccess({ isAttending, firstName }) {
+  if (isAttending) {
+    successTitle.textContent = "Can't wait!";
+    successBody.textContent = `Thanks, ${firstName}!\nI'll save you a seat (& a drink) 🍷`;
+    successCard.hidden = false;
+  } else {
+    successTitle.textContent = 'Thanks for letting me know';
+    successBody.textContent = `Appreciate the note, ${firstName}. We'll miss you at dinner, but hope our paths cross again soon 💌`;
+    successCard.hidden = true;
+  }
+
+  rsvpContent.hidden = true;
+  rsvpSubmit.hidden = true;
+  rsvpForm.hidden = true;
+  successMessage.hidden = false;
+  rsvpView.classList.add('is-success');
+  setRsvpDecosVisible(false);
+  requestAnimationFrame(updateViewportScale);
+}
+
 function restartDecoAnimations() {
   rsvpView.querySelectorAll('.deco').forEach((el) => {
     el.style.animation = 'none';
@@ -125,6 +195,8 @@ function showView(view) {
     successMessage.hidden = true;
     successCard.hidden = true;
     rsvpForm.reset();
+    setRsvpError('');
+    setRsvpSubmitting(false);
     requestAnimationFrame(() => {
       restartDecoAnimations();
       updateViewportScale();
@@ -138,8 +210,9 @@ function showView(view) {
 
 rsvpBtn.addEventListener('click', () => showView('rsvp'));
 
-rsvpForm.addEventListener('submit', (event) => {
+rsvpForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+  setRsvpError('');
 
   const nameInput = rsvpForm.elements.name;
   const trimmedName = nameInput.value.trim();
@@ -162,21 +235,17 @@ rsvpForm.addEventListener('submit', (event) => {
   const isAttending = rsvpForm.attending.value === 'yes';
   const firstName = trimmedName.split(/\s+/)[0];
 
-  if (isAttending) {
-    successTitle.textContent = "Can't wait!";
-    successBody.textContent = `Thanks, ${firstName}!\nI'll save you a seat (& a drink) 🍷`;
-    successCard.hidden = false;
-  } else {
-    successTitle.textContent = 'Thanks for letting me know';
-    successBody.textContent = `Appreciate the note, ${firstName}. We'll miss you at dinner, but hope our paths cross again soon 💌`;
-    successCard.hidden = true;
-  }
+  setRsvpSubmitting(true);
 
-  rsvpContent.hidden = true;
-  rsvpSubmit.hidden = true;
-  rsvpForm.hidden = true;
-  successMessage.hidden = false;
-  rsvpView.classList.add('is-success');
-  setRsvpDecosVisible(false);
-  requestAnimationFrame(updateViewportScale);
+  try {
+    await submitRsvp({
+      name: trimmedName,
+      attending: rsvpForm.attending.value,
+    });
+    showRsvpSuccess({ isAttending, firstName });
+  } catch (error) {
+    setRsvpError(error.message || 'Could not save your RSVP. Please try again.');
+  } finally {
+    setRsvpSubmitting(false);
+  }
 });
