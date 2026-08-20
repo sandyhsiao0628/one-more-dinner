@@ -14,10 +14,10 @@ function doPost(e) {
       return jsonResponse_({ ok: false, error: 'Attending response is required.' });
     }
 
-    const sheet = getSheet_();
-    sheet.appendRow([new Date(), name, attending]);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheets()[0];
+    sheet.appendRow([name, attending]);
 
-    return jsonResponse_({ ok: true, saved: true });
+    return jsonResponse_({ ok: true });
   } catch (error) {
     return jsonResponse_({ ok: false, error: String(error) });
   }
@@ -27,31 +27,15 @@ function doGet() {
   return jsonResponse_({ ok: true, message: 'RSVP endpoint is ready.' });
 }
 
-function getSheet_() {
-  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-  const sheet = spreadsheet.getSheets()[0];
-  ensureHeaders_(sheet);
-  return sheet;
-}
-
-function ensureHeaders_(sheet) {
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['Timestamp', 'Name', 'Attending']);
-    return;
-  }
-
-  const headers = sheet.getRange(1, 1, 1, 3).getValues()[0];
-  const hasHeaders = headers.some((value) => String(value).trim() !== '');
-
-  if (!hasHeaders) {
-    sheet.insertRowBefore(1);
-    sheet.getRange(1, 1, 1, 3).setValues([['Timestamp', 'Name', 'Attending']]);
-  }
-}
-
 function formatAttending_(value) {
-  if (value === 'yes') return 'Yes';
-  if (value === 'no') return "Can't make it";
+  if (value === 'yes') {
+    return 'Yes';
+  }
+
+  if (value === 'no') {
+    return "Can't make it";
+  }
+
   return '';
 }
 
