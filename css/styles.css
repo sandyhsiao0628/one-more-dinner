@@ -59,6 +59,10 @@
   --primary-btn-top: 732px;
   --primary-btn-height: 58px;
   --invitation-stack-h: calc(var(--primary-btn-top) + var(--primary-btn-height));
+  --arch-top: 54px;
+  --arch-height: 585px;
+  --dome-rings-height: 32px;
+  --dome-rings-offset: -2px;
 }
 
 @supports not (height: 100dvh) {
@@ -181,10 +185,10 @@ body {
 
 .dome-rings {
   position: absolute;
-  top: 28px;
+  top: calc(var(--arch-top) + var(--dome-rings-offset) - (var(--dome-rings-height) / 2));
   left: 184px;
   width: 28.39px;
-  height: 45.09px;
+  height: var(--dome-rings-height);
   z-index: 2;
   pointer-events: none;
 }
@@ -204,7 +208,7 @@ body {
 }
 
 .dome-ring--2 {
-  top: 16.91px;
+  top: 11px;
 }
 
 .cheers-illustration {
@@ -309,6 +313,27 @@ body {
   line-height: 1.2;
   color: var(--red);
   width: 100%;
+}
+
+.app-shell.is-app-hidden .headline {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+
+.app-shell.is-app-visible .headline {
+  animation: headline-reveal 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+@keyframes headline-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
 }
 
 .body-text {
@@ -990,6 +1015,12 @@ body.is-intro-active {
   .app-shell.is-app-visible {
     animation: none !important;
     transition: none !important;
+  }
+
+  .headline {
+    clip-path: none !important;
+    opacity: 1 !important;
+    animation: none !important;
   }
 
   .envelope-intro {
