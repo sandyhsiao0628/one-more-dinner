@@ -1,18 +1,3 @@
-/**
- * One More Dinner — RSVP webhook for Google Sheets
- *
- * Setup (one time):
- * 1. Open your sheet:
- *    https://docs.google.com/spreadsheets/d/1bEqzEbYXbmnL_75S8xntKTPZisExDPxP9gYRti272TE/edit
- * 2. Extensions → Apps Script
- * 3. Replace the default code with this file's contents
- * 4. Run setupSheet once (authorize when prompted)
- * 5. Deploy → New deployment → Web app
- *    - Execute as: Me
- *    - Who has access: Anyone
- * 6. Copy the Web app URL into js/config.js → scriptUrl
- */
-
 const SPREADSHEET_ID = '1bEqzEbYXbmnL_75S8xntKTPZisExDPxP9gYRti272TE';
 
 function doPost(e) {
@@ -38,24 +23,8 @@ function doPost(e) {
   }
 }
 
-function doGet(e) {
-  const params = e && e.parameter ? e.parameter : {};
-  const name = String(params.name || '').trim();
-  const attending = formatAttending_(params.attending);
-
-  if (name && attending) {
-    const sheet = getSheet_();
-    sheet.appendRow([new Date(), name, attending]);
-    return jsonResponse_({ ok: true, saved: true });
-  }
-
+function doGet() {
   return jsonResponse_({ ok: true, message: 'RSVP endpoint is ready.' });
-}
-
-function setupSheet() {
-  const sheet = getSheet_();
-  sheet.setFrozenRows(1);
-  sheet.getRange('A1:C1').setFontWeight('bold');
 }
 
 function getSheet_() {
@@ -81,14 +50,8 @@ function ensureHeaders_(sheet) {
 }
 
 function formatAttending_(value) {
-  if (value === 'yes') {
-    return 'Yes';
-  }
-
-  if (value === 'no') {
-    return "Can't make it";
-  }
-
+  if (value === 'yes') return 'Yes';
+  if (value === 'no') return "Can't make it";
   return '';
 }
 
