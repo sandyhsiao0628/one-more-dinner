@@ -1,4 +1,12 @@
-const SPREADSHEET_ID = '1bEqzEbYXbmnL_75S8xntKTPZisExDPxP9gYRti272TE';
+/**
+ * Bind this script to your sheet: Extensions → Apps Script
+ * Row 1 headers: Name | Coming?
+ *
+ * Deploy → New deployment → Web app
+ *   Execute as: Me
+ *   Who has access: Anyone
+ * Copy the /exec URL into js/config.js
+ */
 
 function doPost(e) {
   try {
@@ -14,7 +22,7 @@ function doPost(e) {
       return jsonResponse_({ ok: false, error: 'Attending response is required.' });
     }
 
-    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheets()[0];
+    const sheet = getSheet_();
     sheet.appendRow([name, attending]);
 
     return jsonResponse_({ ok: true });
@@ -25,6 +33,26 @@ function doPost(e) {
 
 function doGet() {
   return jsonResponse_({ ok: true, message: 'RSVP endpoint is ready.' });
+}
+
+function setupSheet() {
+  const sheet = getSheet_();
+  sheet.setFrozenRows(1);
+  sheet.getRange('A1:B1').setFontWeight('bold');
+}
+
+function getSheet_() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  ensureHeaders_(sheet);
+  return sheet;
+}
+
+function ensureHeaders_(sheet) {
+  if (sheet.getLastRow() > 0) {
+    return;
+  }
+
+  sheet.appendRow(['Name', 'Coming?']);
 }
 
 function formatAttending_(value) {
