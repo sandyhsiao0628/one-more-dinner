@@ -404,12 +404,6 @@ body {
   }
 }
 
-.event-label {
-  font-size: 9px;
-  letter-spacing: 0.63px;
-  color: var(--gray);
-}
-
 .event-date {
   font-size: 12px;
   font-weight: 500;
