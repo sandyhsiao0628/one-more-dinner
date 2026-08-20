@@ -366,6 +366,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: deco-float-burst 4.8s ease-in-out infinite;
 }
 
 .deco--burst img {
@@ -385,6 +386,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: deco-float-star 5.4s ease-in-out 0.8s infinite;
 }
 
 .deco--star-tr img {
@@ -403,20 +405,54 @@ body {
   z-index: 4;
   display: block;
   object-fit: contain;
-  animation: scribble-float 5.5s ease-in-out infinite;
+  animation: deco-float-scribble 4.2s ease-in-out 1.4s infinite;
 }
 
-@keyframes scribble-float {
+@keyframes deco-float-burst {
   0%, 100% {
     transform: translate(0, 0) rotate(0deg);
   }
 
-  50% {
-    transform: translate(1.5px, -3px) rotate(1.25deg);
+  45% {
+    transform: translate(-6px, -8px) rotate(-5deg);
+  }
+
+  75% {
+    transform: translate(-3px, 4px) rotate(3deg);
+  }
+}
+
+@keyframes deco-float-star {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  40% {
+    transform: translate(7px, -9px) rotate(4deg);
+  }
+
+  70% {
+    transform: translate(5px, 5px) rotate(-3deg);
+  }
+}
+
+@keyframes deco-float-scribble {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  35% {
+    transform: translate(-7px, 9px) rotate(-4deg);
+  }
+
+  65% {
+    transform: translate(-4px, 5px) rotate(3deg);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .deco--burst,
+  .deco--star-tr,
   .deco--scribble {
     animation: none;
   }
