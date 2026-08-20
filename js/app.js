@@ -138,11 +138,16 @@ async function submitRsvp({ name, attending }) {
     body: JSON.stringify({ name, attending }),
   });
 
+  const responseText = await response.text();
   let result = null;
 
   try {
-    result = await response.json();
+    result = JSON.parse(responseText);
   } catch {
+    if (responseText.includes('doPost')) {
+      throw new Error('RSVP could not be saved. The sheet connection needs to be updated.');
+    }
+
     throw new Error('Could not save your RSVP. Please try again.');
   }
 
