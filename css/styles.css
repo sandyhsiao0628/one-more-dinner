@@ -56,6 +56,9 @@
   --scale: min(var(--avail-w) / var(--design-w), var(--avail-h) / var(--design-h), 1);
   --frame-width: 393px;
   --frame-height: 852px;
+  --primary-btn-top: 732px;
+  --primary-btn-height: 58px;
+  --invitation-stack-h: calc(var(--primary-btn-top) + var(--primary-btn-height));
 }
 
 @supports not (height: 100dvh) {
@@ -92,8 +95,8 @@ body {
 }
 
 .app-shell {
-  min-height: 100%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,8 +110,11 @@ body {
 }
 
 .app-scale {
-  width: calc(var(--frame-width) * var(--scale));
-  height: calc(var(--frame-height) * var(--scale));
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -117,10 +123,11 @@ body {
   width: var(--frame-width);
   height: var(--frame-height);
   transform: scale(var(--scale));
-  transform-origin: top left;
+  transform-origin: center center;
   position: relative;
   overflow: hidden;
   background: var(--bg);
+  flex-shrink: 0;
 }
 
 .view {
@@ -138,10 +145,21 @@ body {
 
 #invitation-view {
   height: var(--frame-height);
+  box-sizing: border-box;
+  padding-top: max(0px, calc((var(--frame-height) - var(--invitation-stack-h)) / 2));
 }
 
 #rsvp-view {
   height: var(--frame-height);
+  box-sizing: border-box;
+}
+
+#rsvp-view:not(.is-success) {
+  padding-top: max(0px, calc((var(--frame-height) - var(--invitation-stack-h)) / 2));
+}
+
+#rsvp-view.is-success {
+  padding-top: 0;
 }
 
 .invitation-card {
@@ -353,9 +371,10 @@ body {
   color: var(--red);
 }
 
-#invitation-view .btn--primary {
+#invitation-view .btn--primary,
+#rsvp-submit {
   position: absolute;
-  top: 668px;
+  top: var(--primary-btn-top);
   left: 30px;
   width: 341px;
 }
@@ -651,18 +670,11 @@ body {
   line-height: 1.2;
 }
 
-#rsvp-submit {
-  position: absolute;
-  top: 660px;
-  left: 26px;
-  width: 341px;
-}
-
 /* ── Success State ── */
 
 .success-message {
   position: absolute;
-  top: 120px;
+  top: 50%;
   left: 43px;
   width: 307px;
   display: flex;
@@ -671,6 +683,7 @@ body {
   gap: 20px;
   text-align: center;
   z-index: 1;
+  transform: translateY(-50%);
 }
 
 .success-kicker {

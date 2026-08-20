@@ -20,6 +20,14 @@ function readSafeInset(name) {
 
 function updateViewportScale() {
   const root = document.documentElement;
+  const shell = document.querySelector('.app-shell');
+
+  if (shell && shell.clientWidth > 0 && shell.clientHeight > 0) {
+    root.style.setProperty('--avail-w', `${shell.clientWidth}px`);
+    root.style.setProperty('--avail-h', `${shell.clientHeight}px`);
+    return;
+  }
+
   const viewport = window.visualViewport;
 
   if (!viewport) {
@@ -39,13 +47,22 @@ function updateViewportScale() {
   root.style.setProperty('--avail-h', `${availHeight}px`);
 }
 
-updateViewportScale();
-window.addEventListener('resize', updateViewportScale);
-window.addEventListener('orientationchange', () => {
-  window.setTimeout(updateViewportScale, 150);
-});
-window.visualViewport?.addEventListener('resize', updateViewportScale);
-window.visualViewport?.addEventListener('scroll', updateViewportScale);
+function bindViewportScaleUpdates() {
+  updateViewportScale();
+  window.addEventListener('resize', updateViewportScale);
+  window.addEventListener('orientationchange', () => {
+    window.setTimeout(updateViewportScale, 150);
+  });
+  window.visualViewport?.addEventListener('resize', updateViewportScale);
+  window.visualViewport?.addEventListener('scroll', updateViewportScale);
+
+  const shell = document.querySelector('.app-shell');
+  if (shell && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(updateViewportScale).observe(shell);
+  }
+}
+
+bindViewportScaleUpdates();
 
 function finishIntro() {
   envelopeIntro.classList.add('is-complete');
@@ -60,12 +77,14 @@ function startReveal() {
   envelopeIntro.classList.add('is-revealing');
   appShell.classList.remove('is-app-hidden');
   appShell.classList.add('is-app-visible');
+  requestAnimationFrame(updateViewportScale);
 }
 
 function playEnvelopeIntro() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     envelopeIntro.remove();
     appShell.classList.remove('is-app-hidden');
+    requestAnimationFrame(updateViewportScale);
     return;
   }
 
@@ -106,8 +125,13 @@ function showView(view) {
     successMessage.hidden = true;
     successCard.hidden = true;
     rsvpForm.reset();
-    requestAnimationFrame(restartDecoAnimations);
+    requestAnimationFrame(() => {
+      restartDecoAnimations();
+      updateViewportScale();
+    });
   }
+
+  requestAnimationFrame(updateViewportScale);
 
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
@@ -154,4 +178,5 @@ rsvpForm.addEventListener('submit', (event) => {
   successMessage.hidden = false;
   rsvpView.classList.add('is-success');
   setRsvpDecosVisible(false);
+  requestAnimationFrame(updateViewportScale);
 });
