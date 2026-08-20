@@ -2,6 +2,14 @@
   font-family: "Geist Sans";
   font-style: normal;
   font-display: swap;
+  font-weight: 300;
+  src: url("../assets/fonts/geist-sans-300.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Geist Sans";
+  font-style: normal;
+  font-display: swap;
   font-weight: 400;
   src: url("../assets/fonts/geist-sans-400.woff2") format("woff2");
 }
@@ -596,6 +604,7 @@ body {
 
 .choice-btn span {
   font-size: 14px;
+  font-weight: 300;
   letter-spacing: 0.98px;
   color: #000;
 }
