@@ -1,3 +1,35 @@
+@font-face {
+  font-family: "Geist Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@5.2.5/latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Geist Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@5.2.5/latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Geist Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@5.2.5/latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Geist Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@5.2.5/latin-800-normal.woff2") format("woff2");
+}
+
 *,
 *::before,
 *::after {
@@ -18,7 +50,7 @@
   --event-box-border: rgba(173, 2, 0, 0.3);
   --btn-border: #e5e5e5;
   --font-script: "Homemade Apple", cursive;
-  --font-body: "Rethink Sans", system-ui, sans-serif;
+  --font-body: "Geist Sans", "Geist", system-ui, sans-serif;
 
   /* Figma iPhone frame — scale to fit any iPhone viewport */
   --design-w: 393;
@@ -368,12 +400,15 @@ body {
   justify-content: center;
 }
 
+#rsvp-view.view--active .deco--burst {
+  animation: deco-float-burst 4.8s ease-in-out infinite;
+}
+
 .deco--burst img {
   width: 76.953px;
   height: 66.729px;
+  transform: rotate(-121.41deg);
   display: block;
-  transform-origin: center center;
-  animation: deco-float-burst 4.8s ease-in-out infinite;
 }
 
 /* Top-right star — Figma 859:46945 */
@@ -388,12 +423,15 @@ body {
   justify-content: center;
 }
 
+#rsvp-view.view--active .deco--star-tr {
+  animation: deco-float-star 5.4s ease-in-out 0.8s infinite;
+}
+
 .deco--star-tr img {
   width: 84.325px;
   height: 80.337px;
+  transform: rotate(-25.52deg);
   display: block;
-  transform-origin: center center;
-  animation: deco-float-star 5.4s ease-in-out 0.8s infinite;
 }
 
 /* Bottom-left scribble star — Figma 859:46947 */
@@ -405,35 +443,37 @@ body {
   z-index: 4;
   display: block;
   object-fit: contain;
-  transform-origin: center center;
+}
+
+#rsvp-view.view--active .deco--scribble {
   animation: deco-float-scribble 4.2s ease-in-out 1.4s infinite;
 }
 
 @keyframes deco-float-burst {
   0%, 100% {
-    transform: rotate(-121.41deg) translate(0, 0);
+    transform: translate(0, 0) rotate(0deg);
   }
 
   45% {
-    transform: rotate(-121.41deg) translate(-10px, -12px);
+    transform: translate(-10px, -12px) rotate(-6deg);
   }
 
   75% {
-    transform: rotate(-121.41deg) translate(-6px, 7px);
+    transform: translate(-6px, 7px) rotate(4deg);
   }
 }
 
 @keyframes deco-float-star {
   0%, 100% {
-    transform: rotate(-25.52deg) translate(0, 0);
+    transform: translate(0, 0) rotate(0deg);
   }
 
   40% {
-    transform: rotate(-25.52deg) translate(11px, -12px);
+    transform: translate(11px, -12px) rotate(5deg);
   }
 
   70% {
-    transform: rotate(-25.52deg) translate(8px, 8px);
+    transform: translate(8px, 8px) rotate(-4deg);
   }
 }
 
@@ -452,10 +492,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .deco--burst img,
-  .deco--star-tr img,
+  .deco--burst,
+  .deco--star-tr,
   .deco--scribble {
-    animation: none !important;
+    animation: none;
   }
 }
 

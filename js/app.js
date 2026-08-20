@@ -41,6 +41,14 @@ function playEnvelopeIntro() {
 
 playEnvelopeIntro();
 
+function restartDecoAnimations() {
+  rsvpView.querySelectorAll('.deco').forEach((el) => {
+    el.style.animation = 'none';
+    void el.offsetHeight;
+    el.style.removeProperty('animation');
+  });
+}
+
 function showView(view) {
   invitationView.classList.toggle('view--active', view === 'invitation');
   invitationView.hidden = view !== 'invitation';
@@ -54,6 +62,7 @@ function showView(view) {
     rsvpForm.hidden = false;
     successMessage.hidden = true;
     rsvpForm.reset();
+    requestAnimationFrame(restartDecoAnimations);
   }
 
   window.scrollTo({ top: 0, behavior: 'instant' });
