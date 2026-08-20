@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>One More Dinner?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Rethink+Sans:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="envelope-intro" class="envelope-intro" aria-live="polite">
+    <div class="envelope-scene">
+      <div class="envelope">
+        <div class="envelope__back"></div>
+        <div class="envelope__letter">
+          <span class="envelope__letter-text">One More Dinner?</span>
+        </div>
+        <div class="envelope__pocket"></div>
+        <div class="envelope__flap">
+          <div class="envelope__flap-face"></div>
+        </div>
+        <div class="envelope__side envelope__side--left"></div>
+        <div class="envelope__side envelope__side--right"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell is-app-hidden">
+    <div class="app-scale">
+  <main class="app">
+    <!-- Invitation Screen -->
+    <section id="invitation-view" class="view view--active" aria-label="Invitation">
+      <div class="invitation-card">
+        <img src="assets/frame-arch.svg" alt="" class="arch-frame" aria-hidden="true">
+
+        <div class="dome-rings" aria-hidden="true">
+          <img src="assets/ring.svg" alt="" class="dome-ring dome-ring--1">
+          <img src="assets/ring.svg" alt="" class="dome-ring dome-ring--2">
+        </div>
+
+        <div class="cheers-illustration" aria-hidden="true">
+          <div class="cheers-drink cheers-drink--left">
+            <img src="assets/cheers-illustration.png" alt="" width="115" height="94">
+          </div>
+          <div class="cheers-drink cheers-drink--right">
+            <img src="assets/cheers-illustration.png" alt="" width="115" height="94">
+          </div>
+        </div>
+
+        <div class="invitation-content">
+          <h1 class="headline">One More Dinner?</h1>
+
+          <p class="body-text">
+            Thanks for being part of my NYC chapter! Before I leave, I'm hosting a small gathering with some of my favorite people.
+          </p>
+
+          <div class="event-details">
+            <p class="event-label">Where &amp; When?</p>
+            <p class="event-date">AUG 21, 2026 7:00 PM</p>
+            <a
+              href="https://maps.google.com/?q=41-46+27TH+ST,+LONG+ISLAND+CITY,+NY+11101"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="event-address"
+            >41-46 27TH ST, LONG ISLAND CITY, NY 11101</a>
+          </div>
+
+          <p class="body-text">
+            I'll prep food and drinks. Feel free to bring snacks, desserts, or extra drinks if you'd like :)
+          </p>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn--primary" id="rsvp-btn">RSVP here</button>
+      <p class="footnote">If you have any dietary restrictions or allergies, message me and lmk.</p>
+    </section>
+
+    <!-- RSVP Screen -->
+    <section id="rsvp-view" class="view" aria-label="RSVP form" hidden>
+      <div class="deco deco--burst" aria-hidden="true">
+        <img src="assets/rsvp-deco-burst.svg" alt="">
+      </div>
+      <div class="deco deco--star-tr" aria-hidden="true">
+        <img src="assets/rsvp-deco-star.svg" alt="">
+      </div>
+      <img src="assets/rsvp-deco-scribble.svg" alt="" class="deco deco--scribble" aria-hidden="true">
+
+      <div id="rsvp-content" class="rsvp-content">
+        <form id="rsvp-form" class="rsvp-form">
+          <div class="rsvp-fields">
+            <div class="form-group">
+              <label for="guest-name" class="form-label">Name:</label>
+              <input
+                type="text"
+                id="guest-name"
+                name="name"
+                class="form-input"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <fieldset class="form-group">
+              <legend class="form-label">Coming?</legend>
+              <div class="choice-group">
+                <label class="choice-btn">
+                  <input type="radio" name="attending" value="yes" required>
+                  <span>Yes!</span>
+                </label>
+                <label class="choice-btn">
+                  <input type="radio" name="attending" value="no">
+                  <span>Can't make it :(</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <p class="footnote footnote--form">
+            If you have any dietary restrictions or allergies, message me and lmk.
+          </p>
+        </form>
+      </div>
+
+      <button type="submit" form="rsvp-form" class="btn btn--primary" id="rsvp-submit">Submit</button>
+
+      <div id="success-message" class="success-message" hidden>
+        <p class="success-title">Thanks for RSVPing!</p>
+        <p class="success-body">See you soon 🍷</p>
+        <button type="button" class="btn btn--secondary" id="back-btn">Back to invitation</button>
+      </div>
+    </section>
+  </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

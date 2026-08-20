@@ -1,0 +1,809 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #fcf5ec;
+  --red: #ad0200;
+  --gray: #808080;
+  --label-gray: #727272;
+  --form-label: #32404f;
+  --white: #ffffff;
+  --border-light: rgba(0, 0, 0, 0.1);
+  --event-box-bg: rgba(173, 2, 0, 0.03);
+  --event-box-border: rgba(173, 2, 0, 0.3);
+  --btn-border: #e5e5e5;
+  --font-script: "Homemade Apple", cursive;
+  --font-body: "Rethink Sans", system-ui, sans-serif;
+
+  /* Figma iPhone frame — scale to fit any iPhone viewport */
+  --design-w: 393;
+  --design-h: 852;
+  --scale: min(100vw / var(--design-w), 100dvh / var(--design-h), 1);
+  --frame-width: 393px;
+  --frame-height: 852px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--red);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:
+    env(safe-area-inset-top, 0px)
+    env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px)
+    env(safe-area-inset-left, 0px);
+  background: var(--bg);
+}
+
+.app-scale {
+  width: calc(var(--frame-width) * var(--scale));
+  height: calc(var(--frame-height) * var(--scale));
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.app {
+  width: var(--frame-width);
+  height: var(--frame-height);
+  transform: scale(var(--scale));
+  transform-origin: top left;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.view {
+  display: none;
+  width: var(--frame-width);
+  height: var(--frame-height);
+  position: relative;
+}
+
+.view--active {
+  display: block;
+}
+
+/* ── Invitation Screen (393 × 852) ── */
+
+#invitation-view {
+  height: var(--frame-height);
+}
+
+#rsvp-view {
+  height: var(--frame-height);
+}
+
+.invitation-card {
+  position: relative;
+  width: var(--frame-width);
+  height: 660px;
+  padding-top: 28px;
+}
+
+.arch-frame {
+  position: absolute;
+  top: 54px;
+  left: 22px;
+  width: 349px;
+  height: 577px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dome-rings {
+  position: absolute;
+  top: 28px;
+  left: 184px;
+  width: 28.39px;
+  height: 45.09px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.dome-ring {
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  transform: rotate(44.78deg) skewX(-0.43deg);
+  display: block;
+}
+
+.dome-ring--1 {
+  top: 0;
+}
+
+.dome-ring--2 {
+  top: 16.91px;
+}
+
+.cheers-illustration {
+  position: absolute;
+  top: 84.74px;
+  left: 139px;
+  width: 114.75px;
+  height: 94.26px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cheers-drink {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cheers-drink img {
+  display: block;
+  width: 114.75px;
+  height: 94.26px;
+  max-width: none;
+}
+
+.cheers-drink--left {
+  left: 0;
+  transform-origin: 86% 90%;
+}
+
+.cheers-drink--right {
+  right: 0;
+  transform-origin: 14% 90%;
+}
+
+.cheers-drink--right img {
+  margin-left: -57.38px;
+}
+
+.app-shell.is-app-visible .cheers-drink--left {
+  animation: cheer-left 3.2s ease-in-out 0.7s infinite;
+}
+
+.app-shell.is-app-visible .cheers-drink--right {
+  animation: cheer-right 3.2s ease-in-out 0.7s infinite;
+}
+
+@keyframes cheer-left {
+  0%, 82%, 100% {
+    transform: rotate(-15deg);
+  }
+
+  36% {
+    transform: rotate(4deg);
+  }
+
+  44%, 68% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes cheer-right {
+  0%, 82%, 100% {
+    transform: rotate(15deg);
+  }
+
+  36% {
+    transform: rotate(-4deg);
+  }
+
+  44%, 68% {
+    transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cheers-drink--left,
+  .cheers-drink--right {
+    animation: none !important;
+  }
+}
+
+.invitation-content {
+  position: absolute;
+  top: 231.5px;
+  left: 53px;
+  width: 288px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  z-index: 1;
+}
+
+.headline {
+  font-family: var(--font-script);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--red);
+  width: 100%;
+}
+
+.body-text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.98px;
+  color: var(--red);
+  width: 100%;
+}
+
+.event-details {
+  background: var(--event-box-bg);
+  border: 1px solid var(--event-box-border);
+  border-radius: 12px;
+  padding: 13px 24px;
+  width: 221px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+}
+
+.event-label {
+  font-size: 9px;
+  letter-spacing: 0.63px;
+  color: var(--gray);
+}
+
+.event-date {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.84px;
+  color: var(--label-gray);
+}
+
+.event-address {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.84px;
+  color: var(--label-gray);
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+.event-address:hover {
+  color: var(--red);
+}
+
+#invitation-view .btn--primary {
+  position: absolute;
+  top: 660px;
+  left: 30px;
+  width: 341px;
+}
+
+#invitation-view .footnote {
+  position: absolute;
+  top: 729px;
+  left: 32px;
+  width: 330px;
+}
+
+/* ── Buttons ── */
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 58px;
+  padding: 12px 13px;
+  border: 1px solid var(--btn-border);
+  border-radius: 12px;
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1.12px;
+  color: #000;
+  cursor: pointer;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  transition: transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--secondary {
+  width: 341px;
+  font-weight: 600;
+}
+
+.footnote {
+  font-size: 9px;
+  letter-spacing: 0.63px;
+  color: var(--gray);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ── RSVP Screen (393 × 852) ── */
+
+.deco {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Top-left firework burst — Figma 859:46949 */
+.deco--burst {
+  left: 32px;
+  top: 85px;
+  width: 97.055px;
+  height: 100.452px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deco--burst img {
+  width: 76.953px;
+  height: 66.729px;
+  transform: rotate(-121.41deg);
+  display: block;
+}
+
+/* Top-right star — Figma 859:46945 */
+.deco--star-tr {
+  left: 264px;
+  top: 60px;
+  width: 110.709px;
+  height: 108.828px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deco--star-tr img {
+  width: 84.325px;
+  height: 80.337px;
+  transform: rotate(-25.52deg);
+  display: block;
+}
+
+/* Bottom-left scribble star — Figma 859:46947 */
+.deco--scribble {
+  left: 26px;
+  top: 534px;
+  width: 79px;
+  height: 70px;
+  z-index: 4;
+  display: block;
+  object-fit: contain;
+}
+
+.rsvp-content {
+  position: absolute;
+  top: 90px;
+  left: 43px;
+  width: 307px;
+  height: 470px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.rsvp-form {
+  width: 307px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.rsvp-fields {
+  width: 307px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  width: 307px;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.form-label {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.12px;
+  color: var(--form-label);
+  text-align: center;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 0;
+}
+
+.form-input {
+  width: 307px;
+  height: 50px;
+  padding: 13px 24px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.98px;
+  color: #000;
+  outline: none;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+}
+
+.form-input:focus {
+  border-color: var(--red);
+}
+
+.choice-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 307px;
+}
+
+.choice-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 307px;
+  height: 43px;
+  padding: 13px 24px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--white);
+  cursor: pointer;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  transition: border-color 0.15s ease, background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.choice-btn input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.choice-btn span {
+  font-size: 14px;
+  letter-spacing: 0.98px;
+  color: #000;
+}
+
+.choice-btn:has(input:checked) {
+  border-color: var(--red);
+  background: var(--event-box-bg);
+}
+
+.footnote--form {
+  font-size: 13px;
+  letter-spacing: 0.77px;
+  width: 307px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+#rsvp-submit {
+  position: absolute;
+  top: 660px;
+  left: 26px;
+  width: 341px;
+}
+
+/* ── Success State ── */
+
+.success-message {
+  position: absolute;
+  top: 90px;
+  left: 43px;
+  width: 307px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  z-index: 1;
+}
+
+.success-title {
+  font-family: var(--font-script);
+  font-size: 28px;
+  color: var(--red);
+}
+
+.success-body {
+  font-size: 16px;
+  letter-spacing: 0.98px;
+  color: var(--form-label);
+}
+
+.success-message .btn--secondary {
+  margin-top: 8px;
+}
+
+/* ── Envelope intro ── */
+
+body.is-intro-active {
+  overflow: hidden;
+}
+
+.envelope-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding:
+    env(safe-area-inset-top, 0px)
+    env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px)
+    env(safe-area-inset-left, 0px);
+  transition: opacity 0.55s ease, visibility 0.55s ease;
+}
+
+.envelope-intro.is-complete {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.envelope-intro.is-revealing {
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.envelope-intro.is-revealing .envelope-scene {
+  animation: scene-fade-out 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.envelope-intro.is-revealing .envelope__back,
+.envelope-intro.is-revealing .envelope__pocket,
+.envelope-intro.is-revealing .envelope__flap,
+.envelope-intro.is-revealing .envelope__side,
+.envelope-intro.is-revealing .envelope__letter,
+.envelope-intro.is-revealing .envelope__letter-text {
+  animation: intro-fade-out 0.45s ease forwards;
+}
+
+.envelope-scene {
+  perspective: 900px;
+  animation: envelope-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.envelope {
+  --env-w: min(288px, 74vw);
+  --env-h: calc(var(--env-w) * 0.62);
+  position: relative;
+  width: var(--env-w);
+  height: var(--env-h);
+  transform-style: preserve-3d;
+}
+
+.envelope__back {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  border: 2px solid var(--red);
+  border-radius: 6px;
+  box-shadow: 0 16px 40px rgba(173, 2, 0, 0.1);
+}
+
+.envelope__letter {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 10%;
+  height: 72%;
+  background: var(--bg);
+  border: 1.5px solid var(--event-box-border);
+  border-radius: 4px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  box-shadow: 0 4px 16px rgba(173, 2, 0, 0.08);
+  transform: translateY(8%);
+  animation: letter-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1.35s forwards;
+}
+
+.envelope__letter-text {
+  font-family: var(--font-script);
+  font-size: clamp(20px, 6vw, 26px);
+  color: var(--red);
+  text-align: center;
+  line-height: 1.2;
+  opacity: 0;
+  animation: letter-text-in 0.5s ease 1.85s forwards;
+}
+
+.envelope__pocket {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #faf6f0;
+  border: 2px solid var(--red);
+  border-radius: 6px;
+  clip-path: polygon(0 42%, 50% 68%, 100% 42%, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.envelope__flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 54%;
+  z-index: 4;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  animation: flap-open 0.95s cubic-bezier(0.45, 0.05, 0.2, 1) 0.55s forwards;
+}
+
+.envelope__flap-face {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  border: 2px solid var(--red);
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  backface-visibility: hidden;
+  box-shadow: 0 6px 14px rgba(173, 2, 0, 0.06);
+}
+
+.envelope__side {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 54%;
+  z-index: 3;
+  border: 2px solid var(--red);
+  background: #f7f0e6;
+  opacity: 0.95;
+}
+
+.envelope__side--left {
+  left: 0;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  border-right: none;
+}
+
+.envelope__side--right {
+  right: 0;
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  border-left: none;
+}
+
+.app-shell.is-app-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-shell.is-app-visible {
+  animation: app-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes envelope-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes flap-open {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
+}
+
+@keyframes letter-rise {
+  0% {
+    transform: translateY(8%);
+  }
+  100% {
+    transform: translateY(-78%);
+  }
+}
+
+@keyframes letter-text-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes intro-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scene-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes app-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope-intro,
+  .envelope-scene,
+  .envelope__flap,
+  .envelope__letter,
+  .envelope__letter-text,
+  .envelope-intro.is-revealing .envelope-scene,
+  .envelope-intro.is-revealing .envelope__letter,
+  .envelope-intro.is-revealing .envelope__letter-text,
+  .app-shell.is-app-visible {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .envelope-intro {
+    display: none;
+  }
+
+  .app-shell.is-app-hidden {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
