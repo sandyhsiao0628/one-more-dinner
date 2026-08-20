@@ -13,38 +13,60 @@ const appShell = document.querySelector('.app-shell');
 
 const REVEAL_START_MS = 5000;
 const INTRO_END_MS = 5650;
+const DESIGN_W = 393;
+const DESIGN_H = 852;
 
 function readSafeInset(name) {
   return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0;
 }
 
-function updateViewportScale() {
-  const root = document.documentElement;
+function getAvailableSize() {
   const shell = document.querySelector('.app-shell');
 
   if (shell && shell.clientWidth > 0 && shell.clientHeight > 0) {
-    root.style.setProperty('--avail-w', `${shell.clientWidth}px`);
-    root.style.setProperty('--avail-h', `${shell.clientHeight}px`);
-    return;
+    return {
+      width: shell.clientWidth,
+      height: shell.clientHeight,
+    };
   }
 
   const viewport = window.visualViewport;
 
   if (!viewport) {
-    root.style.removeProperty('--avail-w');
-    root.style.removeProperty('--avail-h');
-    return;
+    return null;
   }
 
   const safeTop = readSafeInset('--safe-top');
   const safeRight = readSafeInset('--safe-right');
   const safeBottom = readSafeInset('--safe-bottom');
   const safeLeft = readSafeInset('--safe-left');
-  const availWidth = Math.max(viewport.width - safeLeft - safeRight, 0);
-  const availHeight = Math.max(viewport.height - safeTop - safeBottom, 0);
 
-  root.style.setProperty('--avail-w', `${availWidth}px`);
-  root.style.setProperty('--avail-h', `${availHeight}px`);
+  return {
+    width: Math.max(viewport.width - safeLeft - safeRight, 0),
+    height: Math.max(viewport.height - safeTop - safeBottom, 0),
+  };
+}
+
+function updateViewportScale() {
+  const root = document.documentElement;
+  const size = getAvailableSize();
+
+  if (!size || size.width === 0 || size.height === 0) {
+    root.style.removeProperty('--scale');
+    root.style.removeProperty('--scaled-w');
+    root.style.removeProperty('--scaled-h');
+    root.style.removeProperty('--avail-w');
+    root.style.removeProperty('--avail-h');
+    return;
+  }
+
+  const scale = Math.min(size.width / DESIGN_W, size.height / DESIGN_H, 1);
+
+  root.style.setProperty('--scale', String(scale));
+  root.style.setProperty('--scaled-w', `${DESIGN_W * scale}px`);
+  root.style.setProperty('--scaled-h', `${DESIGN_H * scale}px`);
+  root.style.setProperty('--avail-w', `${size.width}px`);
+  root.style.setProperty('--avail-h', `${size.height}px`);
 }
 
 function bindViewportScaleUpdates() {
@@ -57,8 +79,14 @@ function bindViewportScaleUpdates() {
   window.visualViewport?.addEventListener('scroll', updateViewportScale);
 
   const shell = document.querySelector('.app-shell');
+  const intro = document.getElementById('envelope-intro');
+
   if (shell && typeof ResizeObserver !== 'undefined') {
     new ResizeObserver(updateViewportScale).observe(shell);
+  }
+
+  if (intro && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(updateViewportScale).observe(intro);
   }
 }
 
