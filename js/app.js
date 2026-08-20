@@ -129,13 +129,13 @@ async function submitRsvp({ name, attending }) {
     throw new Error('RSVP is not connected yet. Please try again in a moment.');
   }
 
-  const response = await fetch(RSVP_SCRIPT_URL, {
-    method: 'POST',
+  const url = new URL(RSVP_SCRIPT_URL);
+  url.searchParams.set('name', name);
+  url.searchParams.set('attending', attending);
+
+  const response = await fetch(url.toString(), {
+    method: 'GET',
     redirect: 'follow',
-    headers: {
-      'Content-Type': 'text/plain;charset=utf-8',
-    },
-    body: JSON.stringify({ name, attending }),
   });
 
   let result = null;

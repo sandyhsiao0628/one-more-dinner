@@ -38,7 +38,17 @@ function doPost(e) {
   }
 }
 
-function doGet() {
+function doGet(e) {
+  const params = e && e.parameter ? e.parameter : {};
+  const name = String(params.name || '').trim();
+  const attending = formatAttending_(params.attending);
+
+  if (name && attending) {
+    const sheet = getSheet_();
+    sheet.appendRow([new Date(), name, attending]);
+    return jsonResponse_({ ok: true });
+  }
+
   return jsonResponse_({ ok: true, message: 'RSVP endpoint is ready.' });
 }
 
