@@ -403,6 +403,23 @@ body {
   z-index: 4;
   display: block;
   object-fit: contain;
+  animation: scribble-float 5.5s ease-in-out infinite;
+}
+
+@keyframes scribble-float {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(1.5px, -3px) rotate(1.25deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deco--scribble {
+    animation: none;
+  }
 }
 
 .rsvp-content {
