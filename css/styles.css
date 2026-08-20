@@ -113,6 +113,18 @@ body {
   overflow: hidden;
 }
 
+.site-footer {
+  position: fixed;
+  left: calc(16px + var(--safe-left));
+  bottom: calc(10px + var(--safe-bottom));
+  font-size: 9px;
+  letter-spacing: 0.4px;
+  color: var(--gray);
+  text-align: left;
+  z-index: 1001;
+  pointer-events: none;
+}
+
 .app-scale {
   width: 100%;
   height: 100%;
