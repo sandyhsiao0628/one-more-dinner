@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=36">
+  <link rel="stylesheet" href="css/styles.css?v=52">
 </head>
 <body>
   <div id="envelope-intro" class="envelope-intro" aria-live="polite">
@@ -17,12 +17,14 @@
         <div class="envelope__letter">
           <span class="envelope__letter-text">One More Dinner?</span>
         </div>
-        <div class="envelope__pocket"></div>
+        <div class="envelope__side envelope__side--left" aria-hidden="true"></div>
+        <div class="envelope__side envelope__side--right" aria-hidden="true"></div>
+        <div class="envelope__pocket" aria-hidden="true"></div>
         <div class="envelope__flap">
-          <div class="envelope__flap-face"></div>
+          <div class="envelope__flap-inner">
+            <div class="envelope__flap-face"></div>
+          </div>
         </div>
-        <div class="envelope__side envelope__side--left"></div>
-        <div class="envelope__side envelope__side--right"></div>
       </div>
     </div>
   </div>
@@ -144,6 +146,6 @@
   </div>
 
   <script src="js/config.js?v=5"></script>
-  <script src="js/app.js?v=21"></script>
+  <script src="js/app.js?v=27"></script>
 </body>
 </html>

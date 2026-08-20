@@ -11,8 +11,8 @@ const successCard = document.getElementById('success-card');
 const envelopeIntro = document.getElementById('envelope-intro');
 const appShell = document.querySelector('.app-shell');
 
-const REVEAL_START_MS = 4200;
-const INTRO_END_MS = 4800;
+const REVEAL_START_MS = 5000;
+const INTRO_END_MS = 5650;
 
 function readSafeInset(name) {
   return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0;
@@ -81,6 +81,12 @@ function startReveal() {
 }
 
 function playEnvelopeIntro() {
+  if (new URLSearchParams(window.location.search).has('holdIntro')) {
+    document.body.classList.add('is-intro-active');
+    envelopeIntro.classList.add('is-held');
+    return;
+  }
+
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     envelopeIntro.remove();
     appShell.classList.remove('is-app-hidden');
