@@ -129,13 +129,13 @@ async function submitRsvp({ name, attending }) {
     throw new Error('RSVP is not connected yet. Please try again in a moment.');
   }
 
-  const url = new URL(RSVP_SCRIPT_URL);
-  url.searchParams.set('name', name);
-  url.searchParams.set('attending', attending);
-
-  const response = await fetch(url.toString(), {
-    method: 'GET',
+  const response = await fetch(RSVP_SCRIPT_URL, {
+    method: 'POST',
     redirect: 'follow',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8',
+    },
+    body: JSON.stringify({ name, attending }),
   });
 
   let result = null;
@@ -146,7 +146,7 @@ async function submitRsvp({ name, attending }) {
     throw new Error('Could not save your RSVP. Please try again.');
   }
 
-  if (!response.ok || !result?.ok || !result?.saved) {
+  if (!response.ok || !result?.ok || result?.message) {
     throw new Error(result?.error || 'Could not save your RSVP. Please try again.');
   }
 }
