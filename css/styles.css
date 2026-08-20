@@ -366,6 +366,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#rsvp-view.view--active .deco--burst {
   animation: deco-float-burst 4.8s ease-in-out infinite;
 }
 
@@ -386,6 +389,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#rsvp-view.view--active .deco--star-tr {
   animation: deco-float-star 5.4s ease-in-out 0.8s infinite;
 }
 
@@ -405,6 +411,9 @@ body {
   z-index: 4;
   display: block;
   object-fit: contain;
+}
+
+#rsvp-view.view--active .deco--scribble {
   animation: deco-float-scribble 4.2s ease-in-out 1.4s infinite;
 }
 
@@ -414,11 +423,11 @@ body {
   }
 
   45% {
-    transform: translate(-6px, -8px) rotate(-5deg);
+    transform: translate(-10px, -12px) rotate(-6deg);
   }
 
   75% {
-    transform: translate(-3px, 4px) rotate(3deg);
+    transform: translate(-6px, 7px) rotate(4deg);
   }
 }
 
@@ -428,11 +437,11 @@ body {
   }
 
   40% {
-    transform: translate(7px, -9px) rotate(4deg);
+    transform: translate(11px, -12px) rotate(5deg);
   }
 
   70% {
-    transform: translate(5px, 5px) rotate(-3deg);
+    transform: translate(8px, 8px) rotate(-4deg);
   }
 }
 
@@ -442,11 +451,11 @@ body {
   }
 
   35% {
-    transform: translate(-7px, 9px) rotate(-4deg);
+    transform: translate(-11px, 12px) rotate(-5deg);
   }
 
   65% {
-    transform: translate(-4px, 5px) rotate(3deg);
+    transform: translate(-7px, 8px) rotate(4deg);
   }
 }
 
