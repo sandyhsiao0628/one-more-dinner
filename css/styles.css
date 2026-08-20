@@ -368,15 +368,12 @@ body {
   justify-content: center;
 }
 
-#rsvp-view.view--active .deco--burst {
-  animation: deco-float-burst 4.8s ease-in-out infinite;
-}
-
 .deco--burst img {
   width: 76.953px;
   height: 66.729px;
-  transform: rotate(-121.41deg);
   display: block;
+  transform-origin: center center;
+  animation: deco-float-burst 4.8s ease-in-out infinite;
 }
 
 /* Top-right star — Figma 859:46945 */
@@ -391,15 +388,12 @@ body {
   justify-content: center;
 }
 
-#rsvp-view.view--active .deco--star-tr {
-  animation: deco-float-star 5.4s ease-in-out 0.8s infinite;
-}
-
 .deco--star-tr img {
   width: 84.325px;
   height: 80.337px;
-  transform: rotate(-25.52deg);
   display: block;
+  transform-origin: center center;
+  animation: deco-float-star 5.4s ease-in-out 0.8s infinite;
 }
 
 /* Bottom-left scribble star — Figma 859:46947 */
@@ -411,37 +405,35 @@ body {
   z-index: 4;
   display: block;
   object-fit: contain;
-}
-
-#rsvp-view.view--active .deco--scribble {
+  transform-origin: center center;
   animation: deco-float-scribble 4.2s ease-in-out 1.4s infinite;
 }
 
 @keyframes deco-float-burst {
   0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
+    transform: rotate(-121.41deg) translate(0, 0);
   }
 
   45% {
-    transform: translate(-10px, -12px) rotate(-6deg);
+    transform: rotate(-121.41deg) translate(-10px, -12px);
   }
 
   75% {
-    transform: translate(-6px, 7px) rotate(4deg);
+    transform: rotate(-121.41deg) translate(-6px, 7px);
   }
 }
 
 @keyframes deco-float-star {
   0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
+    transform: rotate(-25.52deg) translate(0, 0);
   }
 
   40% {
-    transform: translate(11px, -12px) rotate(5deg);
+    transform: rotate(-25.52deg) translate(11px, -12px);
   }
 
   70% {
-    transform: translate(8px, 8px) rotate(-4deg);
+    transform: rotate(-25.52deg) translate(8px, 8px);
   }
 }
 
@@ -460,10 +452,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .deco--burst,
-  .deco--star-tr,
+  .deco--burst img,
+  .deco--star-tr img,
   .deco--scribble {
-    animation: none;
+    animation: none !important;
   }
 }
 
