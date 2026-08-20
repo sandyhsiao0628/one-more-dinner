@@ -14,6 +14,39 @@ const appShell = document.querySelector('.app-shell');
 const REVEAL_START_MS = 4200;
 const INTRO_END_MS = 4800;
 
+function readSafeInset(name) {
+  return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0;
+}
+
+function updateViewportScale() {
+  const root = document.documentElement;
+  const viewport = window.visualViewport;
+
+  if (!viewport) {
+    root.style.removeProperty('--avail-w');
+    root.style.removeProperty('--avail-h');
+    return;
+  }
+
+  const safeTop = readSafeInset('--safe-top');
+  const safeRight = readSafeInset('--safe-right');
+  const safeBottom = readSafeInset('--safe-bottom');
+  const safeLeft = readSafeInset('--safe-left');
+  const availWidth = Math.max(viewport.width - safeLeft - safeRight, 0);
+  const availHeight = Math.max(viewport.height - safeTop - safeBottom, 0);
+
+  root.style.setProperty('--avail-w', `${availWidth}px`);
+  root.style.setProperty('--avail-h', `${availHeight}px`);
+}
+
+updateViewportScale();
+window.addEventListener('resize', updateViewportScale);
+window.addEventListener('orientationchange', () => {
+  window.setTimeout(updateViewportScale, 150);
+});
+window.visualViewport?.addEventListener('resize', updateViewportScale);
+window.visualViewport?.addEventListener('scroll', updateViewportScale);
+
 function finishIntro() {
   envelopeIntro.classList.add('is-complete');
   document.body.classList.remove('is-intro-active');
@@ -107,7 +140,7 @@ rsvpForm.addEventListener('submit', (event) => {
 
   if (isAttending) {
     successTitle.textContent = "Can't wait!";
-    successBody.textContent = `Thanks, ${firstName}! Your spot is saved — I'll save you a seat (and a drink) 🍷`;
+    successBody.textContent = `Thanks, ${firstName}!\nI'll save you a seat (& a drink) 🍷`;
     successCard.hidden = false;
   } else {
     successTitle.textContent = 'Thanks for letting me know';

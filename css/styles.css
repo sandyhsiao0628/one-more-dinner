@@ -44,16 +44,35 @@
   --font-script: "Homemade Apple", cursive;
   --font-body: "Geist Sans", "Geist", system-ui, sans-serif;
 
-  /* Figma iPhone frame — scale to fit any iPhone viewport */
+  /* Figma iPhone frame — scale to fit any phone viewport */
   --design-w: 393;
   --design-h: 852;
-  --scale: min(100vw / var(--design-w), 100dvh / var(--design-h), 1);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --avail-w: calc(100vw - var(--safe-left) - var(--safe-right));
+  --avail-h: calc(100dvh - var(--safe-top) - var(--safe-bottom));
+  --scale: min(var(--avail-w) / var(--design-w), var(--avail-h) / var(--design-h), 1);
   --frame-width: 393px;
   --frame-height: 852px;
 }
 
+@supports not (height: 100dvh) {
+  :root {
+    --avail-h: calc(100vh - var(--safe-top) - var(--safe-bottom));
+  }
+}
+
 html {
   -webkit-text-size-adjust: 100%;
+  height: 100%;
+}
+
+@supports (height: 100dvh) {
+  html {
+    height: 100dvh;
+  }
 }
 
 [hidden] {
@@ -64,24 +83,27 @@ body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--red);
-  min-height: 100dvh;
+  min-height: 100%;
+  height: 100%;
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .app-shell {
-  min-height: 100dvh;
+  min-height: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   padding:
-    env(safe-area-inset-top, 0px)
-    env(safe-area-inset-right, 0px)
-    env(safe-area-inset-bottom, 0px)
-    env(safe-area-inset-left, 0px);
+    var(--safe-top)
+    var(--safe-right)
+    var(--safe-bottom)
+    var(--safe-left);
   background: var(--bg);
+  overflow: hidden;
 }
 
 .app-scale {
@@ -674,6 +696,7 @@ body {
   letter-spacing: 0.98px;
   color: var(--red);
   width: 100%;
+  white-space: pre-line;
 }
 
 .success-card {
@@ -716,7 +739,7 @@ body {
   font-weight: 400;
   line-height: 1.2;
   color: var(--red);
-  margin-top: -4px;
+  margin-top: 20px;
 }
 
 /* ── Envelope intro ── */
@@ -734,10 +757,10 @@ body.is-intro-active {
   justify-content: center;
   background: var(--bg);
   padding:
-    env(safe-area-inset-top, 0px)
-    env(safe-area-inset-right, 0px)
-    env(safe-area-inset-bottom, 0px)
-    env(safe-area-inset-left, 0px);
+    var(--safe-top)
+    var(--safe-right)
+    var(--safe-bottom)
+    var(--safe-left);
   transition: opacity 0.55s ease, visibility 0.55s ease;
 }
 
