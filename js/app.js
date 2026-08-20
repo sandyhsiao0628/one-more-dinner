@@ -146,7 +146,7 @@ async function submitRsvp({ name, attending }) {
     throw new Error('Could not save your RSVP. Please try again.');
   }
 
-  if (!response.ok || !result?.ok) {
+  if (!response.ok || !result?.ok || !result?.saved) {
     throw new Error(result?.error || 'Could not save your RSVP. Please try again.');
   }
 }

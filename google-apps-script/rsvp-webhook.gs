@@ -32,7 +32,7 @@ function doPost(e) {
     const sheet = getSheet_();
     sheet.appendRow([new Date(), name, attending]);
 
-    return jsonResponse_({ ok: true });
+    return jsonResponse_({ ok: true, saved: true });
   } catch (error) {
     return jsonResponse_({ ok: false, error: String(error) });
   }
@@ -46,7 +46,7 @@ function doGet(e) {
   if (name && attending) {
     const sheet = getSheet_();
     sheet.appendRow([new Date(), name, attending]);
-    return jsonResponse_({ ok: true });
+    return jsonResponse_({ ok: true, saved: true });
   }
 
   return jsonResponse_({ ok: true, message: 'RSVP endpoint is ready.' });
