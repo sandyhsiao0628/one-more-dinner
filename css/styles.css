@@ -721,6 +721,10 @@ body {
   background: var(--event-box-bg);
 }
 
+.choice-btn:has(input:checked) span {
+  font-weight: 500;
+}
+
 .footnote--form {
   font-size: 13px;
   letter-spacing: 0.77px;

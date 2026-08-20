@@ -162,8 +162,8 @@ function showRsvpSuccess({ isAttending, firstName }) {
     successBody.textContent = `Thanks, ${firstName}!\nI'll save you a seat (& a drink) 🍷`;
     successCard.hidden = false;
   } else {
-    successTitle.textContent = 'Thanks for letting me know';
-    successBody.textContent = `Appreciate the note, ${firstName}. We'll miss you at dinner, but hope our paths cross again soon 💌`;
+    successTitle.textContent = 'Thanks for letting me know!';
+    successBody.textContent = "We'll miss you at dinner, but hope to see you again soon 💌";
     successCard.hidden = true;
   }
 
